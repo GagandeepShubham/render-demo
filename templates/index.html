@@ -1,0 +1,101 @@
+<html>
+<head>
+    <title>Job Switch Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            height: 100vh;
+            margin: 0;
+
+            /* Flexbox for centering */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 350px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input[type="number"],
+        .form-container input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Job Switch Prediction for ML roles</h2>
+        <form action="/predict" method="post">
+            <label for="IQ_Score">IQ (70-160):</label>
+            <input type="number" name="IQ_Score" min="70" max="160" value="{{ request.form.get('IQ_Score', '') }}" required>
+            <br><br>
+
+            <label for="Work_Experience_Years"> Work Experience(0-10 Yrs):</label>
+            <input type="number" step="0.1" min="0" max="10" name="Work_Experience_Years" value="{{ request.form.get('Work_Experience_Years', '') }}"required>
+            <br><br>
+
+            <label for="Has_ML_Skills"> Do you have ML skills (0/1)?:</label>
+            <input type="number" min="0" max="1" name="Has_ML_Skills" value="{{request.form.get('Has_ML_Skills')}}" required>
+            <br><br>
+
+            <label for="Has_Achievements"> Any achievements (0/1)?:</label>
+            <input type="number" name="Has_Achievements" min="0" max="1" value="{{request.form.get('Has_Achievements')}}" required>
+            <br><br>
+
+            <label for="Upskilling_Hours_Per_Day"> Hours you spend upskilling per day:</label>
+            <input type="number" step="0.1" min="0" max="24" name="Upskilling_Hours_Per_Day" value="{{request.form.get('Upskilling_Hours_Per_Day')}}" required>
+            <br><br>
+
+            <label for="Consistency_Score"> How consistent you are on a scale of (1-10):</label>
+            <input type="number" min="1" max="10" name="Consistency_Score" value="{{request.form.get('Consistency_Score')}}" required>
+            <br><br>
+
+            <input type="Submit" value="Would you be able to switch to a ML role?">
+        </form>
+        {% if prediction_text %}
+        <div class="result"><strong>{{prediction_text}}</strong></div>
+        {% endif %}
+    </div>
+</body>
+</html>
